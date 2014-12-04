@@ -7,11 +7,14 @@ var hasBlock = new Array(20);
 for (i = 0; i < 20; i++) {
     hasBlock[i] = new Array(10);
 }
+
 //store color map of each block
 var blockColor = new Array(20);
 for (i = 0; i < 20; i++) {
     blockColor[i] = new Array(10);
 }
+
+
 var blockPositionMap_X = new Array(10);
 var blockPositionMap_Y = new Array(20);
 var xPosition = 10;
@@ -19,28 +22,32 @@ var yPosition = 10;
 
 //******** init the block color and exsistency  ******
 for(i=0;i<20;i++)
-	for(j=0;j<10;j++)
+	for(j=0;j<10;j++){
 		hasBlock[i][j] = 0;
+	}
 
 for(i=0;i<20;i++)
-	for(j=0;j<10;j++)
+	for(j=0;j<10;j++){
 		blockColor[i][j] = "grey";
+	}	
 
+// X position of each block in each line j, width is 30
 for(j=0;j<10;j++){
 	blockPositionMap_X[j] = xPosition;
 	xPosition+=30;
 }
+// Y position of each block in each line j, height is 30
 for(i=0;i<20;i++){
 	blockPositionMap_Y[i] = yPosition;
 	yPosition+=30;
 }
 
-function gameSpeed(){
+/*function gameSpeed(){
 
 	setInterval(function() {
     	$('.Timer').text((new Date - start) / 1000 + " Seconds");
 	}, 1000);
-}
+}*/
 
 function randomPick(){
 	//var myArray = ['drawLshape_left', 'drawIshape', 'drawSquare', 'drawLshape_right', 'drawTRIshape', 'drawLIshape_left','drawLIshape_right']; 
@@ -51,31 +58,20 @@ function randomPick(){
 
 
 function blockUpdate(){
-	rows_completed+=checkForCancelRows();
-	var shape = randomPick();
-	//var decisionLocation = 
-	GetDecisionLocation(shape);
-	//if it can pick a move to go after evaluation
-//	if(gameOver==false){
-//		var color = GetColorReference(shape);
-//		for(i=0;i<decisionLocation.placeLocation.length;i++){
-//			hasBlock[decisionLocation.placeLocation[i][0]][decisionLocation.placeLocation[i][1]] = 1;
-//			blockColor[decisionLocation.placeLocation[i][0]][decisionLocation.placeLocation[i][1]] = color;
-//		}	
-			//rows_completed=getPlacementRow(hasBlock, [[1,0],[1,0],[1,1]], 5);
-//	}
-//	else
-//	{
-		//put code here to stop the game
-	//	alert("game over");
-	//}
-	//rows_completed+=checkForCancelRows();
+	if(playerTurn==false){
+		rows_completed+=checkForCancelRows();
+		var shape = randomPick();
+		GetDecisionLocation(shape);
+		playerTurn = true;
+	}
 }
 
 
 function GetDecisionLocation(shape){
 	//AI CODE GOES HERE
+	// Each shape has its belonging color, here we choose it color
 	var color = GetColorReference(shape);
+	// Pick the best move for this shape
 	var decision = pickDecision(shape);
 	//alert("hi");
 	if(decision.noMoveCanMake == true)
@@ -131,6 +127,8 @@ function GetColorReference(shape){
 			break;
 	}
 }
+
+// This function is used to check how many rows can be canceled in this turn
 function checkForCancelRows(){
 	var rows_removed=0;
 	for(i=0;i<20;i++)

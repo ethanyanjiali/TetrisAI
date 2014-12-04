@@ -3,13 +3,13 @@ var PIECES = new Array();
 /* 'I' piece:
   Orientations:
   X
-  X       XXXXX
+  X       XXXX
   X
   X
   */
 PIECES[0] = [
     {
-      orientation: [1, 1, 1, 1],
+      orientation: [[1], [1], [1], [1]],
       width: 1,
       height: 4
     },

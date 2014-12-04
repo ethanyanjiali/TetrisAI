@@ -1,4 +1,5 @@
 function GetLandingHeight(testResult, orientation) {
+	// Landing height is the height of newly placed shape
   var height = (19-testResult.landing_height) + ((orientation.length - 1) / 2);
   return height;
 }
@@ -6,7 +7,8 @@ function GetLandingHeight(testResult, orientation) {
 function GetRowTransitions(map_temp)
 {		//10111010
 	  var transitions = 0;
-
+	  //101111
+	  //In this example, there is two row transition, which are at first col and second col
 	  for (var i = 0; i < map_temp.length; i++) {
 	  		//each row from here:
 		    for (var j = 0; j < 9; j++) {
@@ -19,6 +21,9 @@ function GetRowTransitions(map_temp)
 
 function GetColumnTransitions(map_temp)
 {
+	//101111
+	//111111
+	//In this example, there is one column transition, which is at second col
 	  var transitions = 0;
 	  for (var j = 0; j < 10; j++)
 	  { //each column from here:
@@ -55,6 +60,7 @@ function GetNumberOfHoles(map_temp)
 
 function GetWellSums(map_temp)
 {
+	// ?
 	  var well_sums = 0;
 	  for (var i = 0; i < 10; i++) {
     		for (var j =0; j < 20; j++) {

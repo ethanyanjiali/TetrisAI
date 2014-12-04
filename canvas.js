@@ -24,6 +24,7 @@ window.onload = function(){
 	canvas = document.getElementById("canvas");
 	c=canvas.getContext("2d");
 	drawBackground();
+
 }
 
 //ENTRANCE OF THE PROGRAM
@@ -31,22 +32,24 @@ window.onload = function(){
 function init(){ 
     // Call recursiveAnim function recursively to implement a forever loop
     // This function is responsible for canvas drawing. It is non-block.    
-    animFrame( recursiveAnim ); 
+    //animFrame( recursiveAnim ); 
     // Call blockUpdate every 10ms.
     // This function is responsible for calculating the status of each block. It is also non-block.
-    setInterval(blockUpdate,10); 
+    drawBackground();
+    initPlayer();
+    setInterval(drawGame,100); 
+    setInterval(blockUpdate,100); 
 }
 
 
 //***********To draw on the canvas per frame *********************
 function drawGame(){
-	c.clearRect(0,0,canvas.width,canvas.height);
-	// Draw the background canvas of the game
-	drawBackground();	
+	//c.clearRect(0,0,canvas.width,canvas.height);
+	// Draw the background canvas of the game	
 	// Draw each block
 	drawStackBlocks();
 	// The moving shape on screen. Just a test.
-	drawLshape_left(c,x,y);
+	// drawLshape_left(c,x,y);
 	// Draw text for game information
 	var gradient=c.createLinearGradient(0,0,canvas.width,0);
 	gradient.addColorStop("0","magenta");
@@ -57,17 +60,26 @@ function drawGame(){
 	c.fillText("Rows removed: "+rows_completed, 350, 50);
 }
 
+
 //draw the background stuff
 function drawBackground(){
-    //the game background
+    //the black big background
 	c.fillStyle="black";
 	c.fillRect(0,0,canvas.width,canvas.height);
+	// The gray background
 	c.fillStyle="grey";
 	c.fillRect(7.5,7.5,305,605);
-    //The outline of the game space(L:600, W:300)
+	// The gray background
+	c.fillStyle="grey";
+	c.fillRect(607.5,7.5,305,605);
+    //The red frame of the game space(L:600, W:300)
 	c.strokeStyle = 'red';
 	c.lineWidth=5;
 	c.strokeRect(7.5,7.5,305,605);
+	//The red frame of the game space(L:600, W:300)
+	c.strokeStyle = 'red';
+	c.lineWidth=5;
+	c.strokeRect(607.5,7.5,305,605);
 }
 
 //defining blocks: 10 columns, 20 rows (30 pixels per block square)
@@ -85,6 +97,7 @@ function drawLshape_left(c,x,y){
 	c.strokeRect(x-30,y+60,30,30);
 	window.y+=1;
 }
+
 
 //draw the blocks with color and board according to the maps
 function drawStackBlocks(){
