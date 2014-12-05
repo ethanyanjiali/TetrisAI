@@ -15,7 +15,7 @@
 
 
 <body>
-<table>
+<table bgcolor="#000000"  border="3" align="center">
 	<tr>
 	<td>
 	<canvas id="canvas" width ="918" height ="620">
@@ -28,14 +28,14 @@
 	<button onclick="initAI()" style="height:80px; width:250px"><label style="font-family:myFont; font-size:25px">AI Show!</label></button></td></tr>
 	<tr><td>
 	<button onclick="reload()" style="height:80px; width:250px"><label style="font-family:myFont; font-size:25px">Reload</label></button></td></tr>
-	<tr><td>
+	<tr><td style="background-color:#FFFFFF" align="center">
 	<label style="font-family:myFont; font-size:25px">Difficulty</label></td></tr><tr><td>
 	<select id="difficulty" style="height:60px; width:250px; font-family:myFont; font-size:20px">
-  		<option value ="3">Exteme Hard</option>
+  		<option value ="3">Extreme Hard</option>
   		<option value ="5">Hard</option>
   		<option value="10">Easy</option>
   		<option value="999">Free Mode</option>
-	</select></td></tr><tr><td>
+	</select></td></tr><tr><td style="background-color:#FFFFFF" align="center">
 	<label style="font-family:myFont; font-size:25px">Show Speed</label></td></tr><tr><td>
 	<select id="speed" style="height:60px; width:250px; font-family:myFont; font-size:20px">
 		<option value ="10">Light Speed</option>
@@ -45,6 +45,21 @@
 	</table>
 	</td>
 	</tr>
+</table>
+<br/>
+<table align="center"><tr><td>
+<div style="font-family:myFont; font-size:12px">
+		<font size="5"><b>Instructions</b></font><br/>
+		<ul>
+		<li>Press "Challenge" to fight with AI</li>
+		<li>Press "Show AI" to run AI automatically</li>
+		<li>Press "Reload" to reload the game. You need to reload each time when you finish a game.</li>
+		<li>You can choose the difficuly of game, and the speed of show through two pull-down menus.</li>
+		<li>Press "UP" on keyboard to rotate the shape.</li>
+		<li>Press "LEFT" and "RIGHT" on keyboard to move the shape horizontally.</li>
+		<li>Press "DOWN" on keyboard to finish a move.</li>
+		</ul>
+</div></td></tr>
 </table>
 
 	

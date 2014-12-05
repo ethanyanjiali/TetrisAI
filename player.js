@@ -32,7 +32,7 @@ function initPlayer(){
 
     for(i=0;i<20;i++){
         for(j=0;j<10;j++){
-            blockMap[i][j] = "#CCCCCC";//grey
+            blockMap[i][j] = "#000000";//grey
         }
     }
     prepareNextShape();
@@ -53,7 +53,7 @@ function drawBlockMap(){
                 // Fill the block with color
             c.fillRect(playerBlockPositionMap_X[col],playerBlockPositionMap_Y[row],30,30);
                 // Draw the boundry line of the block
-            if(blockMap[row][col]!="#CCCCCC"){//grey
+            if(blockMap[row][col]!="#000000"){//grey
                 c.beginPath();
                 c.fillStyle=blockMap[row][col].substr(0,4)+"000";
                 c.moveTo(playerBlockPositionMap_X[col]+3,playerBlockPositionMap_Y[row]+28);
@@ -93,7 +93,7 @@ function checkClearedLines(){
         var rowCancel = i;
         for(j=0;j<10;j++)
         { //checking if this row is full to determine if needs to be cancelled
-            if(blockMap[i][j]=="#CCCCCC")//grey
+            if(blockMap[i][j]=="#000000")//grey
                 cancel=false;
             else
                 rowCancel=i;            
@@ -142,11 +142,17 @@ function drawCurrentShape(currentRow){
 }
 
 function rotate(){
-    if(playerTurn){
-        currentOrientation = (currentOrientation + 1) % currentShape.length;
-        var currentRow = findUpperBoundryOfCurrentColumn();
-        drawBlockMap();
-        drawCurrentShape(currentRow);
+    lastOrientation = currentOrientation;
+    currentOrientation = (currentOrientation + 1) % currentShape.length;
+    if(currentColumn<=(10-currentShape[currentOrientation].width)){
+        if(playerTurn){
+            //currentOrientation = (currentOrientation + 1) % currentShape.length;
+            var currentRow = findUpperBoundryOfCurrentColumn();
+            drawBlockMap();
+            drawCurrentShape(currentRow);
+        }
+    }else{
+        currentOrientation = lastOrientation;
     }
 }
 
@@ -209,7 +215,7 @@ function findUpperBoundryOfCurrentColumn(){
                 // When the bottom of the shape overlap with current landscape, we return the number of previous row
                 // Can be further optimized, we just need to check the last row of shape
 
-                if((currentShape[currentOrientation].orientation[i][j] == 1) && (blockMap[row-(heightOfShape-1)+i][currentColumn+j] != "#CCCCCC")){
+                if((currentShape[currentOrientation].orientation[i][j] == 1) && (blockMap[row-(heightOfShape-1)+i][currentColumn+j] != "#000000")){
                     return row-1;
                 }    
             }
@@ -226,5 +232,7 @@ function prepareNextShape(){
 }
 
 document.onkeydown=function(e){
+    // prevent browser scrolling the window
+    e.preventDefault();
     eval(keycom[(e?e:event).keyCode]);
 };

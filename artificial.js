@@ -29,7 +29,7 @@ for(i=0;i<20;i++)
 
 for(i=0;i<20;i++)
 	for(j=0;j<10;j++){
-		blockColor[i][j] = "#CCCCCC";//grey
+		blockColor[i][j] = "#000000";//grey
 	}	
 
 // X position of each block in each line j, width is 30
@@ -129,7 +129,7 @@ function GetColorReference(shape){
 			return"#FF9933";//brown
 			break;
 		default:
-			return"#CCCCCC";//grey
+			return"#000000";//grey
 			break;
 	}
 }

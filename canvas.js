@@ -108,6 +108,10 @@ function drawConsole(){
 	c.fillText("UNBEATABLE", 330, 50);
 	c.fillText("TETRIS", 385, 90);
 	drawCurrentShapeInConsole();
+	// To fix the bug of player boundry
+	c.strokeStyle = 'grey';
+	c.lineWidth=5;
+	c.strokeRect(607.5,7.5,305,605);
 }
 
 
@@ -117,10 +121,10 @@ function drawBackground(){
 	c.fillStyle="black";
 	c.fillRect(0,0,canvas.width,canvas.height);
 	// The gray background
-	c.fillStyle="#CCCCCC";//grey
+	c.fillStyle="#000000";//grey
 	c.fillRect(7.5,7.5,305,605);
 	// The gray background
-	c.fillStyle="#CCCCCC";//grey
+	c.fillStyle="#000000";//grey
 	c.fillRect(607.5,7.5,305,605);
     //The red frame of the game space(L:600, W:300)
 	c.strokeStyle = 'grey';
@@ -178,7 +182,7 @@ function drawStackBlocks(){
                 c.fill();
 			}
 			else{
-				c.fillStyle ="#CCCCCC";//grey
+				c.fillStyle ="#000000";//grey
 				c.fillRect(blockPositionMap_X[j],blockPositionMap_Y[i],30,30);
 			}
 		}
@@ -219,8 +223,8 @@ function setBlockColor(i,j){
 	case "#99CC00":
 		c.fillStyle ="#99CC00";
 		break;
-	case "#CCCCCC":
-		c.fillStyle ="#CCCCCC";
+	case "#000000":
+		c.fillStyle ="#000000";
 		break;
 	case "#009933":
 		c.fillStyle ="#009933";
@@ -241,7 +245,7 @@ function setBlockColor(i,j){
 		c.fillStyle ="#FF9933";
 		break;
 	default:
-		c.fillStyle ="#CCCCCC";
+		c.fillStyle ="#000000";
 		break;
 	}
 }
