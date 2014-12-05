@@ -5,9 +5,10 @@ var ONE_FRAME_TIME = 1000 / 60 ;
 var x=10+30*4,y=10; //starting position of a shape
 var gameOver=false;
 var showSpeed;
+var timer;
 
 
-var animFrame = window.requestAnimationFrame ||
+/*var animFrame = window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame    ||
         window.oRequestAnimationFrame      ||
@@ -17,7 +18,7 @@ var animFrame = window.requestAnimationFrame ||
 var recursiveAnim = function() {
         drawGame();
         animFrame( recursiveAnim );
-};
+};*/
 
 
 //********Setup at the beginning********************
@@ -25,7 +26,7 @@ window.onload = function(){
 	canvas = document.getElementById("canvas");
 	c=canvas.getContext("2d");
 	drawBackground();
-    setInterval(drawConsole,10); 
+    setInterval(drawConsole,100); 
 }
 
 function reload(){
@@ -50,7 +51,7 @@ function init(){
     timeLeft = MAXTIME;
     initPlayer();
     setInterval(drawGame,100); 
-    setInterval(timeOut,1000); 
+    timer = setInterval(timeOut,1000); 
     setInterval(blockUpdate,100); 
     
 }

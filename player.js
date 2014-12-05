@@ -159,6 +159,8 @@ function rotate(){
 function down(){
     if(playerTurn){
         timeLeft=MAXTIME;
+        window.clearInterval(timer);
+        timer = setInterval(timeOut,1000);
         var currentRow = findUpperBoundryOfCurrentColumn();
         checkIfOver(currentRow);
         putShapeIntoMap(currentRow);

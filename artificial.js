@@ -57,7 +57,6 @@ function randomPick(){
 	return newShape;
 }
 
-
 function blockUpdate(){
 	rows_completed+=checkForCancelRows();
 	if(playerTurn==false || AImode == true){	
@@ -83,7 +82,8 @@ function GetDecisionLocation(shape){
 	if(decision.noMoveCanMake == true)
 	{
 		gameOver=true;
-		aler("game over");
+		alert("It is impossible! Are you cheating?");
+        window.location.reload(false); 
 	}
 	else
 	{ 

@@ -2,7 +2,7 @@
 
 // This function is used to calculate evaluation function accroding to hard code weight
 function evaluateDecision(testResult,orientation) {
-
+	//return 0;
 	  return GetLandingHeight(testResult, orientation) * -4.500158825082766 +
 	      testResult.rows_removed * 3.4181268101392694 +
 	      GetRowTransitions(testResult.map_temp) * -3.2178882868487753 +
