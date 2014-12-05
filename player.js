@@ -16,6 +16,7 @@ var player_rows_completed = 0;
 
 function initPlayer(){
         // X position of each block in each line j, width is 30
+    playerTurn = true;
     for(j=0;j<10;j++){
         playerBlockPositionMap_X[j] = playerXPosition;
         playerXPosition+=30;

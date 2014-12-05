@@ -6,6 +6,12 @@ var x=10+30*4,y=10; //starting position of a shape
 var gameOver=false;
 var showSpeed;
 var timer;
+var timerDrawGame;
+var timerAIDrawGame;
+var timerBlockUpdate;
+var timerAIBlockUpdate;
+var playerInited = false;
+var AIInited = false;
 
 
 /*var animFrame = window.requestAnimationFrame ||
@@ -45,15 +51,27 @@ function init(){
     //animFrame( recursiveAnim ); 
     // Call blockUpdate every 10ms.
     // This function is responsible for calculating the status of each block. It is also non-block.
-    drawBackground();
+    //drawBackground();
+    MAXTIME = parseInt(document.getElementById("difficulty").value);
+    if(AIInited){
+    	window.clearInterval(timerAIDrawGame);
+    	window.clearInterval(timerAIBlockUpdate);
+    	window.clearInterval(timer);
+    } 
+    if(playerInited){
+    	playerTurn = true;
+    	var currentRow = findUpperBoundryOfCurrentColumn();
+    	drawBlockMap();
+    	drawCurrentShape(currentRow);
+    } else {
+		initPlayer();
+		timeLeft = MAXTIME;
+    }
     AImode = false;
-    MAXTIME= parseInt(document.getElementById("difficulty").value);
-    timeLeft = MAXTIME;
-    initPlayer();
-    setInterval(drawGame,100); 
+    timerDrawGame = setInterval(drawGame,100); 
     timer = setInterval(timeOut,1000); 
-    setInterval(blockUpdate,100); 
-    
+    timerBlockUpdate = setInterval(blockUpdate,100); 
+    playerInited = true;
 }
 
 function initAI(){ 
@@ -62,18 +80,26 @@ function initAI(){
     //animFrame( recursiveAnim ); 
     // Call blockUpdate every 10ms.
     // This function is responsible for calculating the status of each block. It is also non-block.
-    drawBackground();
+    //drawBackground();
+    if(playerInited){
+    	window.clearInterval(timerDrawGame);
+    	window.clearInterval(timerBlockUpdate);
+    	window.clearInterval(timer);
+    }
     AImode = true;
     showSpeed = parseInt(document.getElementById("speed").value);
-    setInterval(drawGame,showSpeed); 
-    setInterval(blockUpdate,showSpeed); 
+    timerAIDrawGame = setInterval(drawGame,showSpeed); 
+    timerAIBlockUpdate = setInterval(blockUpdate,showSpeed); 
+    AIInited = true;
     
 }
 function timeOut(){
-	if(timeLeft>=1){
-		timeLeft-=1;
-	} else {
-		down();
+	if(!AImode){
+		if(timeLeft>=1){
+			timeLeft-=1;
+		} else {
+			down();
+		}
 	}
 }
 //***********To draw on the canvas per frame *********************
