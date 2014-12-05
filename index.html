@@ -6,12 +6,14 @@
 	<style>
 	@font-face {font-family:myFont; src: url("ka1.ttf")}
 	</style>
+	<script language="javascript" type="text/javascript" src="jquery-1.11.1.min.js"></script>
 	<script language="javascript" type="text/javascript" src="pieces.js"></script>
 	<script language="javascript" type="text/javascript" src="features.js"></script>
 	<script language="javascript" type="text/javascript" src="decisionMaking.js"></script>
 	<script language="javascript" type="text/javascript" src="artificial.js"></script>
 	<script language="javascript" type="text/javascript" src="canvas.js"></script>
 	<script language="javascript" type="text/javascript" src="player.js"></script>
+
 
 
 <body>
@@ -22,6 +24,8 @@
 	</canvas></td>
 	<td>
 	<table>
+	<tr><td>
+	<button onclick="scroll()" style="height:80px; width:250px"><label style="font-family:myFont; font-size:25px">Instruction</label></button></td></tr>
 	<tr><td>
 	<button onclick="init()" style="height:80px; width:250px"><label style="font-family:myFont; font-size:25px">Challenge!</label></button></td></tr>
 	<tr><td>
@@ -48,7 +52,7 @@
 </table>
 <br/>
 <table align="center"><tr><td>
-<div style="font-family:myFont; font-size:12px">
+<div style="font-family:myFont; font-size:15px">
 		<font size="5"><b>Instructions</b></font><br/>
 		<ul>
 		<li>Press "Challenge" to fight with AI</li>

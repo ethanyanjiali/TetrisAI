@@ -32,6 +32,10 @@ function reload(){
 	window.location.reload(false);
 }
 
+function scroll(){
+	$('html,body').animate({scrollTop:1000}, 500);
+}
+
 //ENTRANCE OF THE PROGRAM
 //**********User clicks and then go,this is where the game begins**********
 function init(){ 
