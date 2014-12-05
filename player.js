@@ -2,6 +2,9 @@ var keycom={"38":"rotate()","40":"down()","37":"moveLeft()","39":"moveRight()"};
 var currentShape = PIECES[Math.floor(Math.random() * PIECES.length)];
 var currentOrientation = 0;
 var currentColumn = 5;
+var lastShape;
+var MAXTIME = 5;
+var timeLeft = MAXTIME;
 
 var playerBlockPositionMap_X = new Array(10);
 var playerBlockPositionMap_Y = new Array(20);
@@ -9,6 +12,7 @@ var playerXPosition = 610;
 var playerYPosition = 10;
 var playerTurn = true;
 var blockMap = new Array(20);
+var player_rows_completed = 0;
 
 function initPlayer(){
         // X position of each block in each line j, width is 30
@@ -28,7 +32,7 @@ function initPlayer(){
 
     for(i=0;i<20;i++){
         for(j=0;j<10;j++){
-            blockMap[i][j] = "grey";
+            blockMap[i][j] = "#CCCCCC";//grey
         }
     }
     prepareNextShape();
@@ -40,7 +44,7 @@ function initPlayer(){
 
 
 function drawBlockMap(){
-    c.strokeStyle = 'black';
+    c.strokeStyle = 'white';
     c.lineWidth=1;
     for(var row=0; row<20; row++){
         for(var col=0; col<10; col++)
@@ -49,8 +53,18 @@ function drawBlockMap(){
                 // Fill the block with color
             c.fillRect(playerBlockPositionMap_X[col],playerBlockPositionMap_Y[row],30,30);
                 // Draw the boundry line of the block
-            if(blockMap[row][col]!="grey"){
-                c.strokeRect(playerBlockPositionMap_X[col],playerBlockPositionMap_Y[row],30,30);
+            if(blockMap[row][col]!="#CCCCCC"){//grey
+                c.beginPath();
+                c.fillStyle=blockMap[row][col].substr(0,4)+"000";
+                c.moveTo(playerBlockPositionMap_X[col]+3,playerBlockPositionMap_Y[row]+28);
+                c.lineTo(playerBlockPositionMap_X[col]+28,playerBlockPositionMap_Y[row]+28);
+                c.lineTo(playerBlockPositionMap_X[col]+28,playerBlockPositionMap_Y[row]+3);
+                c.lineTo(playerBlockPositionMap_X[col]+23,playerBlockPositionMap_Y[row]+8);
+                c.lineTo(playerBlockPositionMap_X[col]+23,playerBlockPositionMap_Y[row]+23);
+                c.lineTo(playerBlockPositionMap_X[col]+8,playerBlockPositionMap_Y[row]+23);
+                c.closePath();
+                c.fill();
+                //c.strokeRect(playerBlockPositionMap_X[col],playerBlockPositionMap_Y[row],30,30);
             }
         }
     }
@@ -73,34 +87,32 @@ function putShapeIntoMap(currentRow){
 
 // This function is used to check how many rows can be cleared in this turn
 function checkClearedLines(){
-    var rows_removed=0;
     for(i=0;i<20;i++)
     {
         var cancel = true;
         var rowCancel = i;
         for(j=0;j<10;j++)
         { //checking if this row is full to determine if needs to be cancelled
-            if(blockMap[i][j]=="grey")
+            if(blockMap[i][j]=="#CCCCCC")//grey
                 cancel=false;
             else
                 rowCancel=i;            
         }
         if(cancel==true)
         {//if this row needs to be cancelled, shift all blocks above down by 1 block
-            rows_removed++;
+            player_rows_completed+=1;
             for(m=rowCancel;m>0;m--)
                 for(n=0;n<10;n++)
                 {
                     blockMap[m][n]=blockMap[m-1][n];
                 }
         }
-    }
-    return rows_removed;        
+    }     
 }
 
 function drawCurrentShape(currentRow){
-    c.strokeStyle = 'black';
-    c.lineWidth=1;
+    c.strokeStyle = 'red';
+    c.lineWidth=2;
     heightOfShape = currentShape[currentOrientation].orientation.length;
     widthOfShape = currentShape[currentOrientation].orientation[0].length;
     colorOfShape = GetColorReference(currentShape);
@@ -111,9 +123,19 @@ function drawCurrentShape(currentRow){
             {
                 c.fillStyle = colorOfShape;
                 // Fill the block with color
-                c.fillRect(playerBlockPositionMap_X[col+currentColumn],playerBlockPositionMap_Y[currentRow-heightOfShape+1+row],30,30);
+                //c.fillRect(playerBlockPositionMap_X[col+currentColumn],playerBlockPositionMap_Y[currentRow-heightOfShape+1+row],30,30);
                 // Draw the boundry line of the block
                 c.strokeRect(playerBlockPositionMap_X[col+currentColumn],playerBlockPositionMap_Y[currentRow-heightOfShape+1+row],30,30);
+                /*c.beginPath();
+                c.fillStyle=colorOfShape.substr(0,4)+"000";
+                c.moveTo(playerBlockPositionMap_X[col+currentColumn]+3,playerBlockPositionMap_Y[currentRow-heightOfShape+1+row]+28);
+                c.lineTo(playerBlockPositionMap_X[col+currentColumn]+28,playerBlockPositionMap_Y[currentRow-heightOfShape+1+row]+28);
+                c.lineTo(playerBlockPositionMap_X[col+currentColumn]+28,playerBlockPositionMap_Y[currentRow-heightOfShape+1+row]+3);
+                c.lineTo(playerBlockPositionMap_X[col+currentColumn]+23,playerBlockPositionMap_Y[currentRow-heightOfShape+1+row]+8);
+                c.lineTo(playerBlockPositionMap_X[col+currentColumn]+23,playerBlockPositionMap_Y[currentRow-heightOfShape+1+row]+23);
+                c.lineTo(playerBlockPositionMap_X[col+currentColumn]+8,playerBlockPositionMap_Y[currentRow-heightOfShape+1+row]+23);
+                c.closePath();
+                c.fill();*/
             }
         }
     }  
@@ -130,7 +152,9 @@ function rotate(){
 
 function down(){
     if(playerTurn){
+        timeLeft=MAXTIME;
         var currentRow = findUpperBoundryOfCurrentColumn();
+        checkIfOver(currentRow);
         putShapeIntoMap(currentRow);
         drawBlockMap();
         checkClearedLines();
@@ -142,6 +166,13 @@ function down(){
     }
 }
 
+function checkIfOver(currentRow){
+    if((currentRow-currentShape[currentOrientation].height)<=0){
+        alert("Sorry, You lose. Tetris AI is UNBEATABLE!");
+        window.location.reload(false); 
+    }
+}
+
 function moveLeft(){
     if(playerTurn){
        if(currentColumn>0){
@@ -149,7 +180,6 @@ function moveLeft(){
             var currentRow = findUpperBoundryOfCurrentColumn();
             drawBlockMap();
             drawCurrentShape(currentRow);
-            document.getElementById("currentColumn").innerHTML = currentColumn;
         } 
     }
 }
@@ -161,7 +191,6 @@ function moveRight(){
             var currentRow = findUpperBoundryOfCurrentColumn();
             drawBlockMap();
             drawCurrentShape(currentRow);
-            document.getElementById("currentColumn").innerHTML = currentColumn; 
         } 
     }
 }
@@ -180,7 +209,7 @@ function findUpperBoundryOfCurrentColumn(){
                 // When the bottom of the shape overlap with current landscape, we return the number of previous row
                 // Can be further optimized, we just need to check the last row of shape
 
-                if((currentShape[currentOrientation].orientation[i][j] == 1) && (blockMap[row-(heightOfShape-1)+i][currentColumn+j] != "grey")){
+                if((currentShape[currentOrientation].orientation[i][j] == 1) && (blockMap[row-(heightOfShape-1)+i][currentColumn+j] != "#CCCCCC")){
                     return row-1;
                 }    
             }
@@ -190,6 +219,7 @@ function findUpperBoundryOfCurrentColumn(){
 }
 
 function prepareNextShape(){
+    lastShape = currentShape;
     currentShape = PIECES[Math.floor(Math.random() * PIECES.length)];
     currentOrientation = 0;
     currentColumn = 5;

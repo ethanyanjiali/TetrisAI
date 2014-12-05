@@ -1,6 +1,7 @@
 
 var i,j;
 var rows_completed =0;
+var AImode = false;
 
 //defining x y axis drawing pixel location for each block 10*20
 var hasBlock = new Array(20);
@@ -28,7 +29,7 @@ for(i=0;i<20;i++)
 
 for(i=0;i<20;i++)
 	for(j=0;j<10;j++){
-		blockColor[i][j] = "grey";
+		blockColor[i][j] = "#CCCCCC";//grey
 	}	
 
 // X position of each block in each line j, width is 30
@@ -58,9 +59,14 @@ function randomPick(){
 
 
 function blockUpdate(){
-	if(playerTurn==false){
-		rows_completed+=checkForCancelRows();
-		var shape = randomPick();
+	rows_completed+=checkForCancelRows();
+	if(playerTurn==false || AImode == true){	
+		if(AImode){
+			var shape = randomPick();
+		}
+		else{
+			var shape = lastShape;
+		}
 		GetDecisionLocation(shape);
 		playerTurn = true;
 	}
@@ -102,28 +108,28 @@ function GetDecisionLocation(shape){
 function GetColorReference(shape){
 	switch(shape){
 		case PIECES[0]:
-		 	return "green";
+		 	return "#99CC00";//green
 		 	break;
 		case PIECES[1]: 
-			return"yellow";
+			return"#009933";//dark green
 			break;
 		case PIECES[2]: 
-			return"pink";
+			return"#FF6666";//pink
 			break;
 		case PIECES[3]: 
-			return"blue";
+			return"#3399CC";//blue
 			break;
 		case PIECES[4]: 
-			return"purple";
+			return"#CC3399";//purple
 			break;
 		case PIECES[5]: 
-			return"white";
+			return"#FFFF99";//white
 			break;
 		case PIECES[6]: 
-			return"brown";
+			return"#FF9933";//brown
 			break;
 		default:
-			return"green";
+			return"#CCCCCC";//grey
 			break;
 	}
 }

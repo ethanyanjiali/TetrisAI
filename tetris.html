@@ -3,6 +3,9 @@
 <head>
 	<meta charset="ytf-8" />
 	<title>Unbeatable Tretris</title>
+	<style>
+	@font-face {font-family:myFont; src: url("ka1.ttf")}
+	</style>
 	<script language="javascript" type="text/javascript" src="pieces.js"></script>
 	<script language="javascript" type="text/javascript" src="features.js"></script>
 	<script language="javascript" type="text/javascript" src="decisionMaking.js"></script>
@@ -12,10 +15,38 @@
 
 
 <body>
-	<label id="currentColumn">Current Column</label><br/>
-	<canvas id="canvas" width ="1000" height ="650">
-	</canvas>
-	<button onclick="init()">Draw</button>
+<table>
+	<tr>
+	<td>
+	<canvas id="canvas" width ="918" height ="620">
+	</canvas></td>
+	<td>
+	<table>
+	<tr><td>
+	<button onclick="init()" style="height:80px; width:250px"><label style="font-family:myFont; font-size:25px">Challenge!</label></button></td></tr>
+	<tr><td>
+	<button onclick="initAI()" style="height:80px; width:250px"><label style="font-family:myFont; font-size:25px">AI Show!</label></button></td></tr>
+	<tr><td>
+	<button onclick="reload()" style="height:80px; width:250px"><label style="font-family:myFont; font-size:25px">Reload</label></button></td></tr>
+	<tr><td>
+	<label style="font-family:myFont; font-size:25px">Difficulty</label></td></tr><tr><td>
+	<select id="difficulty" style="height:60px; width:250px; font-family:myFont; font-size:20px">
+  		<option value ="3">Exteme Hard</option>
+  		<option value ="5">Hard</option>
+  		<option value="10">Easy</option>
+  		<option value="999">Free Mode</option>
+	</select></td></tr><tr><td>
+	<label style="font-family:myFont; font-size:25px">Show Speed</label></td></tr><tr><td>
+	<select id="speed" style="height:60px; width:250px; font-family:myFont; font-size:20px">
+		<option value ="10">Light Speed</option>
+  		<option value ="100">Horse Speed</option>
+  		<option value="1000">Tortoise Speed</option>
+	</select><br/></td></tr>
+	</table>
+	</td>
+	</tr>
+</table>
+
 	
 </body>
 </html>
