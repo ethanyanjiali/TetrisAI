@@ -3,12 +3,18 @@
 // This function is used to calculate evaluation function accroding to hard code weight
 function evaluateDecision(testResult,orientation) {
 	//return 0;
-	  return GetLandingHeight(testResult, orientation) * -4.500158825082766 +
+/*	  return GetLandingHeight(testResult, orientation) * -4.500158825082766 +
 	      testResult.rows_removed * 3.4181268101392694 +
 	      GetRowTransitions(testResult.map_temp) * -3.2178882868487753 +
 	      GetColumnTransitions(testResult.map_temp) * -9.348695305445199 +
 	      GetNumberOfHoles(testResult.map_temp) * -7.899265427351652 +
-	      GetWellSums(testResult.map_temp) * -3.3855972247263626;
+	      GetWellSums(testResult.map_temp) * -3.3855972247263626;*/
+	      return GetLandingHeight(testResult, orientation) * -60.017980 +
+	      testResult.rows_removed * 39.389727 +
+	      GetRowTransitions(testResult.map_temp) * -31.934414 +
+	      GetColumnTransitions(testResult.map_temp) * -90.041103 +
+	      GetNumberOfHoles(testResult.map_temp) * -87.659034 +
+	      GetWellSums(testResult.map_temp) * -64.133800;
 }
 
 //this func is to pick the best move by trying all moves and evaluating them:
