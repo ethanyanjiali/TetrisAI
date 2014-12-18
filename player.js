@@ -1,10 +1,14 @@
 var keycom={"38":"rotate()","40":"down()","37":"moveLeft()","39":"moveRight()"};
+var nextShape = PIECES[Math.floor(Math.random() * PIECES.length)]
 var currentShape = PIECES[Math.floor(Math.random() * PIECES.length)];
 var currentOrientation = 0;
 var currentColumn = 5;
 var lastShape;
-var MAXTIME = 5;
+var MAXTIME = 10;
 var timeLeft = MAXTIME;
+var isArcade = false;
+var stonePos = 0;
+var cnt1=0;
 
 var playerBlockPositionMap_X = new Array(10);
 var playerBlockPositionMap_Y = new Array(20);
@@ -40,6 +44,7 @@ function initPlayer(){
     var currentRow = findUpperBoundryOfCurrentColumn();
     drawBlockMap();
     drawCurrentShape(currentRow);
+    document.getElementById("difficulty").disabled = true;
 }
 
 
@@ -102,13 +107,57 @@ function checkClearedLines(){
         if(cancel==true)
         {//if this row needs to be cancelled, shift all blocks above down by 1 block
             player_rows_completed+=1;
-            for(m=rowCancel;m>0;m--)
+            //remove player's line
+            for(m=rowCancel;m>0;m--){
                 for(n=0;n<10;n++)
                 {
                     blockMap[m][n]=blockMap[m-1][n];
                 }
+            }
+            //add ai's line
+            if(!AImode && isArcade){
+                if(cnt1>(6-currentLevel)){
+                for(n=0;n<10;n++){
+                    for(m=1;m<20;m++)
+                    {
+                        if(hasBlock[m][n]==1){
+                            if(n%2==stonePos){
+                                hasBlock[m-1][n]=1;
+                                blockColor[m-1][n]="#999999";
+                            } else {
+                                hasBlock[m-1][n]=0;
+                                blockColor[m-1][n]="#000000";    
+                            } 
+                            break;
+                        }
+                    }
+                }
+                cnt1=0;
+            }
+            cnt1++;
+            }
+            
+/*            for(m=0;m<19;m++){
+                for(n=0;n<10;n++)
+                {
+                    hasBlock[m][n]=hasBlock[m+1][n];
+                    blockColor[m][n]=blockColor[m+1][n];
+                }
+            }
+            for(n=0;n<10;n+=1){
+                if(n%2==stonePos){
+                    hasBlock[19][n]=1;
+                    blockColor[19][n]="#999999";
+                } else {
+                    hasBlock[19][n]=0;
+                    blockColor[19][n]="#000000";    
+                } 
+            }
+            stonePos=1-stonePos;*/
         }
-    }     
+        stonePos=1-stonePos;
+    }
+
 }
 
 function drawCurrentShape(currentRow){
@@ -159,7 +208,7 @@ function rotate(){
 
 function down(){
     if(playerTurn){
-        timeLeft=MAXTIME;
+        timeLeft = MAXTIME;
         window.clearInterval(timer);
         timer = setInterval(timeOut,1000);
         var currentRow = findUpperBoundryOfCurrentColumn();
@@ -172,6 +221,24 @@ function down(){
         currentRow = findUpperBoundryOfCurrentColumn();
         drawCurrentShape(currentRow);
         playerTurn = false;
+            if(isArcade){
+                if(player_rows_completed<15){
+                    MAXTIME = 10;
+                    currentLevel = 1;
+                } else if(player_rows_completed<50){
+                    MAXTIME = 8;
+                    currentLevel = 2;
+                } else if(player_rows_completed<100){
+                    MAXTIME = 5;
+                    currentLevel = 3;
+                } else if(player_rows_completed<300){
+                    MAXTIME = 3;
+                    currentLevel = 4;
+                } else if(player_rows_completed<500){
+                    MAXTIME = 2;
+                    currentLevel = 5;
+                }
+            }
     }
 }
 
@@ -229,7 +296,8 @@ function findUpperBoundryOfCurrentColumn(){
 
 function prepareNextShape(){
     lastShape = currentShape;
-    currentShape = PIECES[Math.floor(Math.random() * PIECES.length)];
+    currentShape = nextShape;
+    nextShape = PIECES[Math.floor(Math.random() * PIECES.length)];
     currentOrientation = 0;
     currentColumn = 5;
 }

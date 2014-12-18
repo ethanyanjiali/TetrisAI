@@ -28,24 +28,26 @@
 	<button onclick="scroll()" style="height:67px; width:250px"><label style="font-family:myFont; font-size:25px">Instruction</label></button></td></tr>
 	<tr><td>
 	<button onclick="init()" style="height:67px; width:250px"><label style="font-family:myFont; font-size:25px">Challenge!</label></button></td></tr>
-	<tr><td>
-	<button onclick="initAI()" style="height:67px; width:250px"><label style="font-family:myFont; font-size:25px">AI Show!</label></button></td></tr>
-	<tr><td>
-	<button onclick="reload()" style="height:67px; width:250px"><label style="font-family:myFont; font-size:25px">Reload</label></button></td></tr>
 	<tr><td align="center">
 	<label style="font-family:myFont; font-size:25px; color:white">Difficulty</label></td></tr><tr><td>
 	<select id="difficulty" style="height:60px; width:250px; font-family:myFont; font-size:20px">
+  		<option value ="1">Arcade Mode</option>
   		<option value ="2">Extreme Hard</option>
   		<option value ="5">Hard</option>
   		<option value="10">Easy</option>
   		<option value="999">Free Mode</option>
-	</select></td></tr><tr><td align="center">
+	</select></td></tr>
+	<tr><td>
+	<button onclick="initAI()" style="height:67px; width:250px"><label style="font-family:myFont; font-size:25px">AI Show!</label></button></td></tr>
+	<tr><td align="center">
 	<label style="font-family:myFont; font-size:25px; color:white">Show Speed</label></td></tr><tr><td>
 	<select id="speed" style="height:60px; width:250px; font-family:myFont; font-size:20px">
 		<option value ="10">Light Speed</option>
   		<option value ="100">Horse Speed</option>
   		<option value="1000">Tortoise Speed</option>
 	</select><br/></td></tr>
+	<tr><td>
+	<button onclick="reload()" style="height:67px; width:250px"><label style="font-family:myFont; font-size:25px">Reload</label></button></td></tr>
 	<tr><td>
 		<table>
 			<tr>
@@ -89,6 +91,11 @@
 		<li>You can also use the virtual keyboard to control.</li>
 		</ul>
 </div></td></tr>
+	<tr><td>
+		<div style="font-family:myFont; font-size:18px; color:white">
+		Thanks for Prof.Bart Selman and CS4701.<br/>
+		Developed by Cornell student Xi He and Yanjia Li.</div>
+	</td></tr>
 </table>
 
 	

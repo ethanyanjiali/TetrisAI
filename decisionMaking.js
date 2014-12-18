@@ -9,12 +9,12 @@ function evaluateDecision(testResult,orientation) {
 	      GetColumnTransitions(testResult.map_temp) * -9.348695305445199 +
 	      GetNumberOfHoles(testResult.map_temp) * -7.899265427351652 +
 	      GetWellSums(testResult.map_temp) * -3.3855972247263626;*/
-	      return GetLandingHeight(testResult, orientation) * -60.017980 +
-	      testResult.rows_removed * 39.389727 +
-	      GetRowTransitions(testResult.map_temp) * -31.934414 +
-	      GetColumnTransitions(testResult.map_temp) * -90.041103 +
-	      GetNumberOfHoles(testResult.map_temp) * -87.659034 +
-	      GetWellSums(testResult.map_temp) * -64.133800;
+	      return GetLandingHeight(testResult, orientation) * -60.017980136357515 +
+	      testResult.rows_removed * 39.38972760181724 +
+	      GetRowTransitions(testResult.map_temp) * -31.934414083175437 +
+	      GetColumnTransitions(testResult.map_temp) * -90.04110337416141 +
+	      GetNumberOfHoles(testResult.map_temp) * -87.65903423606353 +
+	      GetWellSums(testResult.map_temp) * -64.13380030664379;
 }
 
 //this func is to pick the best move by trying all moves and evaluating them:

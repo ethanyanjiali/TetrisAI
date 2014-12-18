@@ -12,7 +12,7 @@ var timerBlockUpdate;
 var timerAIBlockUpdate;
 var playerInited = false;
 var AIInited = false;
-
+var currentLevel = 1;
 
 /*var animFrame = window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
@@ -53,6 +53,12 @@ function init(){
     // This function is responsible for calculating the status of each block. It is also non-block.
     //drawBackground();
     MAXTIME = parseInt(document.getElementById("difficulty").value);
+    if(MAXTIME==1){
+    	isArcade = true;
+    	MAXTIME = 10;
+    } else {
+    	isArcade = false;
+    }
     if(AIInited){
     	window.clearInterval(timerAIDrawGame);
     	window.clearInterval(timerAIBlockUpdate);
@@ -93,6 +99,7 @@ function initAI(){
     AIInited = true;
     
 }
+
 function timeOut(){
 	if(!AImode){
 		if(timeLeft>=1){
@@ -108,6 +115,9 @@ function drawGame(){
 	// Draw the background canvas of the game	
 	// Draw each block
 	drawStackBlocks();
+	currentRow = findUpperBoundryOfCurrentColumn();
+	drawBlockMap();
+    drawCurrentShape(currentRow);
 	// The moving shape on screen. Just a test.
 	// drawLshape_left(c,x,y);
 	// Draw text for game information
@@ -125,8 +135,9 @@ function drawConsole(){
 	c.fillStyle=gradient;
 	c.fillText("AI Lines: "+rows_completed, 350, 150);
 	c.fillText("Player Lines: "+player_rows_completed, 350, 200);
-	c.fillText("Current Shape:", 350, 280);
-	c.fillText("Time Left:", 380, 480);
+	c.fillText("Level: "+currentLevel, 350, 250);
+	c.fillText("Next Shape:", 350, 300);
+	c.fillText("Time Left:", 380, 500);
 	c.font = "60px myFont";
 	if(timeLeft>99){
 		c.fillText(timeLeft, 380, 560);
@@ -138,7 +149,7 @@ function drawConsole(){
 	c.font = "30px myFont";
 	c.fillText("UNBEATABLE", 330, 50);
 	c.fillText("TETRIS", 385, 90);
-	drawCurrentShapeInConsole();
+	drawNextShapeInConsole();
 	// To fix the bug of player boundry
 	c.strokeStyle = 'grey';
 	c.lineWidth=5;
@@ -219,14 +230,14 @@ function drawStackBlocks(){
 		}
 }
 
-function drawCurrentShapeInConsole(){
-    heightOfShape = currentShape[0].orientation.length;
-    widthOfShape = currentShape[0].orientation[0].length;
-    colorOfShape = GetColorReference(currentShape);
+function drawNextShapeInConsole(){
+    heightOfShape = nextShape[0].orientation.length;
+    widthOfShape = nextShape[0].orientation[0].length;
+    colorOfShape = GetColorReference(nextShape);
     for(var row=0; row<heightOfShape; row++){
         for(var col=0; col<widthOfShape; col++)
         {
-            if(currentShape[0].orientation[row][col]==1)
+            if(nextShape[0].orientation[row][col]==1)
             {
                 c.fillStyle = colorOfShape;
                 // Fill the block with color
@@ -274,6 +285,9 @@ function setBlockColor(i,j){
 		break;
 	case "#FF9933":
 		c.fillStyle ="#FF9933";
+		break;
+	case "#999999":
+		c.fillStyle ="#999999";
 		break;
 	default:
 		c.fillStyle ="#000000";

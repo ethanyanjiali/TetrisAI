@@ -1,7 +1,8 @@
-
+var stonePos2 = 0;
 var i,j;
 var rows_completed =0;
 var AImode = false;
+var cnt2 = 0;
 
 //defining x y axis drawing pixel location for each block 10*20
 var hasBlock = new Array(20);
@@ -151,13 +152,52 @@ function checkForCancelRows(){
 		if(cancel==true)
 		{//if this row needs to be cancelled, shift all blocks above down by 1 block
 			rows_removed++;
-			for(m=rowCancel;m>0;m--)
+			for(m=rowCancel;m>0;m--){
 				for(n=0;n<10;n++)
 				{
 					hasBlock[m][n]=hasBlock[m-1][n];
 					blockColor[m][n]=blockColor[m-1][n];
 				}
+			}
+			//add player lines
+			if(!AImode && isArcade){
+				if(cnt2>(6-currentLevel)){
+				for(n=0;n<10;n++){
+	                for(m=1;m<20;m++)
+	                {
+	                    if(blockMap[m][n]!="#000000"){
+	                        if(n%2==stonePos2){
+	                            blockMap[m-1][n]="#999999";
+	                        } else {
+	                            blockMap[m-1][n]="#000000";    
+	                        } 
+	                        break;
+	                    }
+	                }
+            	}
+            	cnt2=0;
+			}
+			cnt2++;
+			}
+			
+            
+/*			if(stoneCnt>)
+			for(m=0;m<19;m++){
+                for(n=0;n<10;n++)
+                {
+                    blockMap[m][n]=blockMap[m+1][n];
+                }
+            }
+            for(n=0;n<10;n+=1){
+                if(n%2==stonePos2){
+                    blockMap[19][n]="#999999";
+                } else {
+                    blockMap[19][n]="#000000";    
+                }
+            }
+            stonePos2=1-stonePos2;*/
 		}
+		stonePos2=1-stonePos2;
 	}
 	return rows_removed;		
 }
