@@ -75,6 +75,7 @@ function init(){
     }
     AImode = false;
     timerDrawGame = setInterval(drawGame,100); 
+    window.clearInterval(timer);
     timer = setInterval(timeOut,1000); 
     timerBlockUpdate = setInterval(blockUpdate,100); 
     playerInited = true;
