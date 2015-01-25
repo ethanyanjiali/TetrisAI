@@ -242,16 +242,16 @@ function drawNextShapeInConsole(){
             {
                 c.fillStyle = colorOfShape;
                 // Fill the block with color
-                c.fillRect(410+30*row,320+30*col,30,30);
+                c.fillRect(410+30*row,320+30*(widthOfShape-col),30,30);
                 // Draw the boundry line of the block
                 c.beginPath();
                 c.fillStyle=colorOfShape.substr(0,4)+"000";
-                c.moveTo(410+30*row+3,320+30*col+28);
-                c.lineTo(410+30*row+28,320+30*col+28);
-                c.lineTo(410+30*row+28,320+30*col+3);
-                c.lineTo(410+30*row+23,320+30*col+8);
-                c.lineTo(410+30*row+23,320+30*col+23);
-                c.lineTo(410+30*row+8,320+30*col+23);
+                c.moveTo(410+30*row+3,320+30*(widthOfShape-col)+28);
+                c.lineTo(410+30*row+28,320+30*(widthOfShape-col)+28);
+                c.lineTo(410+30*row+28,320+30*(widthOfShape-col)+3);
+                c.lineTo(410+30*row+23,320+30*(widthOfShape-col)+8);
+                c.lineTo(410+30*row+23,320+30*(widthOfShape-col)+23);
+                c.lineTo(410+30*row+8,320+30*(widthOfShape-col)+23);
                 c.closePath();
                 c.fill();
             }
